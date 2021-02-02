@@ -83,7 +83,8 @@ const http = {
       const json = parser.parse(res.data, this.xmlConfig)
       if (json && json.rss && json.rss.list) {
         const videoList = json.rss.list.video
-        return videoList
+        // 只有一条数据的时候，解析返回的是一个对象
+        return Array.isArray(videoList) ? videoList : [videoList]
       }
       return null
     } catch (err) {
